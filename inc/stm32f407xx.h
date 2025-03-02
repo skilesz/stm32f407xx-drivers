@@ -359,4 +359,11 @@ typedef struct {
 
 
 
+/**********************Driver Includes**********************/
+
+#include "stm32f407xx_gpio_driver.h"
+
+
+
+
 #endif /* INC_STM32F407XX_H_ */

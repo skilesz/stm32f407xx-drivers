@@ -181,13 +181,15 @@ void GPIO_ResetPort(GPIO_RegDef_t* pGPIOx){
  *
  * @desc			Reads specified pin
  *
- * @param			pGPIOx: base address of GPIO port
- * @param			pinNumber: pin of specified port to read
+ * @param			pGPIOHandle: handle of pin to be read from
  *
  * @return			Value of the specified pin
  */
-uint8_t GPIO_ReadPin(GPIO_RegDef_t* pGPIOx, uint8_t pinNumber) {
-	return 0;
+uint8_t GPIO_ReadPin(GPIO_Handle_t* pGPIOHandle) {
+	uint8_t value;
+	value = (uint8_t) (pGPIOHandle->pGPIOx->IDR >> pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber) & 0x1;
+
+	return value;
 }
 
 /*
@@ -200,7 +202,7 @@ uint8_t GPIO_ReadPin(GPIO_RegDef_t* pGPIOx, uint8_t pinNumber) {
  * @return			Value of all pins of specified port
  */
 uint16_t GPIO_ReadPort(GPIO_RegDef_t* pGPIOx) {
-	return 0;
+	return (uint16_t) pGPIOx->IDR;
 }
 
 /*
@@ -208,14 +210,14 @@ uint16_t GPIO_ReadPort(GPIO_RegDef_t* pGPIOx) {
  *
  * @desc			Writes value to specified pin
  *
- * @param			pGPIOx: base address of GPIO port
- * @param			pinNumber: pin of specified port to write to
+ * @param			pGPIOHandle: handle of pin to be written to
  * @param 			set: SET or RESET macros
  *
  * @return			void
  */
-void GPIO_WritePin(GPIO_RegDef_t* pGPIOx, uint8_t pinNumber, uint8_t set) {
-
+void GPIO_WritePin(GPIO_Handle_t* pGPIOHandle, uint8_t set) {
+	if (set == SET) pGPIOHandle->pGPIOx->BSRR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+	else pGPIOHandle->pGPIOx->BSRR |= (1 << (pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber + 16));
 }
 
 /*
@@ -229,7 +231,7 @@ void GPIO_WritePin(GPIO_RegDef_t* pGPIOx, uint8_t pinNumber, uint8_t set) {
  * @return			void
  */
 void GPIO_WritePort(GPIO_RegDef_t* pGPIOx, uint16_t val) {
-
+	pGPIOx->ODR = val;
 }
 
 /*
@@ -237,13 +239,12 @@ void GPIO_WritePort(GPIO_RegDef_t* pGPIOx, uint16_t val) {
  *
  * @desc			Toggle specified pin
  *
- * @param			pGPIOx: base address of GPIO port
- * @param			pinNumber: pin of specified port to toggle
+ * @param			pGPIOHandle: handle of the pin to be toggled
  *
  * @return			void
  */
-void GPIO_TogglePin(GPIO_RegDef_t* pGPIOx, uint8_t pinNumber){
-
+void GPIO_TogglePin(GPIO_Handle_t* pGPIOHandle) {
+	pGPIOHandle->pGPIOx->ODR ^= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
 }
 
 /*

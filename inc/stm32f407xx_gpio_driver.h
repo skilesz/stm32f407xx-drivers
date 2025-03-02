@@ -100,11 +100,11 @@ void GPIO_ResetPort(GPIO_RegDef_t* pGPIOx);
  * Data processing
  */
 
-uint8_t GPIO_ReadPin(GPIO_RegDef_t* pGPIOx, uint8_t pinNumber);
+uint8_t GPIO_ReadPin(GPIO_Handle_t* pGPIOHandle);
 uint16_t GPIO_ReadPort(GPIO_RegDef_t* pGPIOx);
-void GPIO_WritePin(GPIO_RegDef_t* pGPIOx, uint8_t pinNumber, uint8_t set);
+void GPIO_WritePin(GPIO_Handle_t* pGPIOHandle, uint8_t set);
 void GPIO_WritePort(GPIO_RegDef_t* pGPIOx, uint16_t val);
-void GPIO_TogglePin(GPIO_RegDef_t* pGPIOx, uint8_t pinNumber);
+void GPIO_TogglePin(GPIO_Handle_t* pGPIOHandle);
 
 /*
  * IRQ Handling
