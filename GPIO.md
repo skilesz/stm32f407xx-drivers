@@ -57,7 +57,7 @@ typedef struct {
 
 <br/>
 
-For example, to enable pin PD12 as an input pin with the internal pull-up resistor enabled, you would write something like the following:
+For example, to configure pin PD12 as an input pin with the internal pull-up resistor enabled, you would write something like the following:
 
 ```
 GPIO_Handle_t input;
@@ -74,40 +74,147 @@ After creating a GPIO handle, you can use it in the functions defined in the API
 
 ## API
 
-The following functions are made available to the user to use the GPIO peripheral. The handle variable used in the *EXAMPLE USAGE* lines is the `input` handle created above.
+The following functions are made available to the user to utilize the GPIO peripheral. All functions will report a specific error by returning a negative value as specified in the [Error Codes](#error-codes) section.
 
 <br/>
 
-### int8_t GPIO_Clock(GPIO_RegDef_t* pGPIOx, uint8_t enable)
-- **DESCRIPTION**: Enables or disables peripheral clock for given GPIO port
-- **PARAMETERS**:
-  - *pGPIOx*: one of 11 GPIO ports (GPIOA, GPIOB, ..., GPIOK)
-  - *enable*: one of 2 macros (ENABLE or DISABLE)
-- **RETURN**:
-  - 0 = success
-  - NEGATIVE = see [error codes](#error-codes)
-- **EXAMPLE USAGE**: `GPIO_Clock(GPIOD, ENABLE);`
+### GPIO_Clock()
+```
+/*
+ * @fn				GPIO_Clock
+ *
+ * @desc			Enables or disables peripheral clock for given GPIO port
+ *
+ * @param			pGPIOx: base address of GPIO port
+ * @param			enable: ENABLE or DISABLE macros
+ *
+ * @return			0		-> success
+ *				NEGATIVE	-> see @ERROR_CODES
+ */
+
+int8_t GPIO_Clock(GPIO_RegDef_t* pGPIOx, uint8_t enable)
+```
+**EXAMPLE USAGE**
+*Enable clock of GPIO port D*
+```
+GPIO_Clock(GPIOD, ENABLE);
+````
 
 <br/>
 
-### int8_t GPIO_InitPin(GPIO_Handle_t* pGPIOHandle)
-- **DESCRIPTION**: Initializes pin with specified properties
-- **PARAMETERS**:
-  - *pGPIOHandle*: handle of pin to be configured
-- **RETURN**:
-  - 0 = success
-  - NEGATIVE = see [error codes](#error-codes)
-- **EXAMPLE USAGE**: `GPIO_InitPin(input)`
+### GPIO_InitPin()
+```
+/*
+ * @fn				GPIO_InitPin
+ *
+ * @desc			Initializes pin with specified properties
+ *
+ * @param			pGPIOHandle: settings of pin to be configured
+ *
+ * @return			0		-> success
+ * 				NEGATIVE	-> see @ERROR_CODES
+ */
+
+int8_t GPIO_InitPin(GPIO_Handle_t* pGPIOHandle)
+```
+**EXAMPLE USAGE**
+*Initialize pin PD12 (as specified by `input` handle created in [Getting Started](#getting-started))*
+```
+GPIO_InitPin(input);
+```
 
 <br/>
 
-### int8_t GPIO_ResetPort(GPIO_RegDef_t* pGPIOx)
-- **DESCRIPTION**: Resets all pins of specified port
-- **PARAMETERS**:
-  - *pGPIOx*: one of 11 GPIO ports (GPIOA, GPIOB, ..., GPIOK)
-- **RETURN**:
-  - 0 = success
-  - NEGATIVE = see [error codes](#error-codes)
-- **EXAMPLE USAGE**: `GPIO_ResetPort(GPIOD)`
+### GPIO_ResetPort()
+```
+/*
+ * @fn				GPIO_ResetPort
+ *
+ * @desc			Resets specified port
+ *
+ * @param			pGPIOx: base address of GPIO port
+ *
+ * @return			0		-> success
+ * 				NEGATIVE	-> see @ERROR_CODES
+ */
+
+int8_t GPIO_ResetPort(GPIO_RegDef_t* pGPIOx)
+```
+**EXAMPLE USAGE**
+*Reset all pins of GPIO port D*
+```
+GPIO_ResetPort(GPIOD);
+```
+
+<br/>
+
+### GPIO_ReadPin()
+```
+/*
+ * @fn				GPIO_ReadPin
+ *
+ * @desc			Reads specified pin
+ *
+ * @param			pGPIOHandle: handle of pin to be read from
+ *
+ * @return			0x0 - 0x1	-> success
+ * 				NEGATIVE	-> see @ERROR_CODES
+ */
+
+int8_t GPIO_ReadPin(GPIO_Handle_t* pGPIOHandle)
+```
+**EXAMPLE USAGE**
+*Read value of pin PD12 (referenced using `input` handle created in [Getting Started](#getting-started))*
+```
+GPIO_ReadPin(input);
+```
+
+<br/>
+
+### GPIO_ReadPort()
+```
+/*
+ * @fn				GPIO_ReadPort
+ *
+ * @desc			Reads all pins of specified port
+ *
+ * @param			pGPIOx: base address of GPIO port
+ *
+ * @return			0x0 - 0xFFFF	-> success
+ * 				NEGATIVE	-> see @ERROR_CODES
+ */
+
+int32_t GPIO_ReadPort(GPIO_RegDef_t* pGPIOx)
+```
+**EXAMPLE USAGE**
+*Read value of all pins of GPIO port D*
+```
+GPIO_ReadPort(GPIOD);
+```
+
+<br/>
+
+### GPIO_WritePin()
+```
+/*
+ * @fn				GPIO_WritePin
+ *
+ * @desc			Writes value to specified pin
+ *
+ * @param			pGPIOHandle: handle of pin to be written to
+ * @param 			set: SET or RESET macros
+ *
+ * @return			0		-> success
+ * 				NEGATIVE	-> see @ERROR_CODES
+ */
+
+int8_t GPIO_WritePin(GPIO_Handle_t* pGPIOHandle, uint8_t set)
+```
+**EXAMPLE USAGE**
+*Set output value of pin PD12 to 1 (referenced using `input` handle created in [Getting Started](#getting-started))*
+```
+GPIO_WritePin(input, SET);
+```
+
 
 ## Error Codes
