@@ -1,6 +1,6 @@
 # GPIO Driver
 
-This page details the use of the GPIO driver, including the API, structures, and error codes. The STM32F407XX family of microcontrollers contain 11 ports (GPIOA - GPIOK), each with up to 16 individual pins.
+This page details the use of the GPIO driver, including the API, structures, and error codes. The STM32F407XX family of microcontrollers contain up to 11 ports (GPIOA - GPIOK), each with up to 16 individual pins.
 
 ## Getting Started
 
