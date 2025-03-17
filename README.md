@@ -5,7 +5,7 @@ This project is my attempt at writing drivers for different peripherals connecte
 ## Current Drivers
 Click on a name to see the relevant peripheral driver documentation.
 
-- GPIO
+- [GPIO](/GPIO.md)
 
 ## Upcoming Drivers
 These are drivers I am planning to implement in the near future. Feel free to request a particular peripheral!
