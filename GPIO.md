@@ -94,7 +94,7 @@ The following functions are made available to the user to utilize the GPIO perip
 
 int8_t GPIO_Clock(GPIO_RegDef_t* pGPIOx, uint8_t enable)
 ```
-**EXAMPLE USAGE**
+**EXAMPLE USAGE**  
 *Enable clock of GPIO port D*
 ```
 GPIO_Clock(GPIOD, ENABLE);
@@ -117,7 +117,7 @@ GPIO_Clock(GPIOD, ENABLE);
 
 int8_t GPIO_InitPin(GPIO_Handle_t* pGPIOHandle)
 ```
-**EXAMPLE USAGE**
+**EXAMPLE USAGE**  
 *Initialize pin PD12 (as specified by `input` handle created in [Getting Started](#getting-started))*
 ```
 GPIO_InitPin(input);
@@ -140,7 +140,7 @@ GPIO_InitPin(input);
 
 int8_t GPIO_ResetPort(GPIO_RegDef_t* pGPIOx)
 ```
-**EXAMPLE USAGE**
+**EXAMPLE USAGE**  
 *Reset all pins of GPIO port D*
 ```
 GPIO_ResetPort(GPIOD);
@@ -163,7 +163,7 @@ GPIO_ResetPort(GPIOD);
 
 int8_t GPIO_ReadPin(GPIO_Handle_t* pGPIOHandle)
 ```
-**EXAMPLE USAGE**
+**EXAMPLE USAGE**  
 *Read value of pin PD12 (referenced using `input` handle created in [Getting Started](#getting-started))*
 ```
 GPIO_ReadPin(input);
@@ -186,7 +186,7 @@ GPIO_ReadPin(input);
 
 int32_t GPIO_ReadPort(GPIO_RegDef_t* pGPIOx)
 ```
-**EXAMPLE USAGE**
+**EXAMPLE USAGE**  
 *Read value of all pins of GPIO port D*
 ```
 GPIO_ReadPort(GPIOD);
@@ -210,7 +210,7 @@ GPIO_ReadPort(GPIOD);
 
 int8_t GPIO_WritePin(GPIO_Handle_t* pGPIOHandle, uint8_t set)
 ```
-**EXAMPLE USAGE**
+**EXAMPLE USAGE**  
 *Set output value of pin PD12 to 1 (referenced using `input` handle created in [Getting Started](#getting-started))*
 ```
 GPIO_WritePin(input, SET);
