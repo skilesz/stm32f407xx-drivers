@@ -74,7 +74,18 @@ After creating a GPIO handle, you can use it in the functions defined in the API
 
 ## API
 
-The following functions are made available to the user to utilize the GPIO peripheral. All functions will report a specific error by returning a negative value as specified in the [Error Codes](#error-codes) section.
+The following functions are made available to the user to utilize the GPIO peripheral. All functions will report a specific error by returning a negative value as specified in the [Error Codes](#error-codes) section. For the `pGPIOx` paramater, use one of 11 GPIO port macros:
+- `GPIOA`
+- `GPIOB`
+- `GPIOC`
+- `GPIOD`
+- `GPIOE`
+- `GPIOF`
+- `GPIOG`
+- `GPIOH`
+- `GPIOI`
+- `GPIOJ`
+- `GPIOK`
 
 <br/>
 
