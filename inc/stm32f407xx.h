@@ -9,8 +9,26 @@
 #define INC_STM32F407XX_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define __vo volatile
+
+
+
+
+/**********************Processor Specific Addresses**********************/
+
+/*
+ * NVIC registers
+ */
+
+#define NVIC_ISER					((uint32_t*) 0xE000E100U)		// Base address of NVIC_ISER registers
+#define NVIC_ICER					((uint32_t*) 0xE000E180U)		// Base address of NVIC_ICER registers
+#define NVIC_ISPR					((uint32_t*) 0xE000E200U)		// Base address of NVIC_ISPR registers
+#define NVIC_ICPR					((uint32_t*) 0xE000E280U)		// Base address of NVIC_ICPR registers
+#define NVIC_IABR					((uint32_t*) 0xE000E300U)		// Base address of NVIC_IABR registers
+#define NVIC_IPR					((uint32_t*) 0xE000E400U)		// Base address of NVIC_IPR registers
+#define NVIC_STIR					((uint32_t*) 0xE000EF00U)		// Base address of NVIC_STIR register
 
 
 
@@ -194,6 +212,31 @@ typedef struct {
 	__vo uint32_t DCKCFGR;			// RCC Dedicated Clock Configuration Register							Offset: 0x8C
 } RCC_RegDef_t;
 
+/*
+ * EXTI registers
+ */
+
+typedef struct {
+	__vo uint32_t IMR;				// EXTI interrupt mask register											Offset: 0x00
+	__vo uint32_t EMR;				// EXTI event mask register												Offset: 0x04
+	__vo uint32_t RTSR;				// EXTI rising trigger selection register								Offset: 0x08
+	__vo uint32_t FTSR;				// EXTI falling trigger selection register								Offset: 0x0C
+	__vo uint32_t SWIER;			// EXTI software interrupt event register								Offset: 0x10
+	__vo uint32_t PR;				// EXTI pending register												Offset: 0x14
+} EXTI_RegDef_t;
+
+/*
+ * SYSCFG registers
+ */
+
+typedef struct {
+	__vo uint32_t MEMRMP;			// SYSCFG memory remap register											Offset: 0x00
+	__vo uint32_t PMC;				// SYSCFG peripheral mode configuration register						Offset: 0x04
+	__vo uint32_t EXTICR[4];		// SYSCFG external interrupt configuration registers 1-4				Offset: 0x08-0x14
+	uint32_t RESERVED0[2];			// !!RESERVED!! (0x18, 0x1C)
+	__vo uint32_t CMPCR;			// SYSCFG compensation cell control register							Offset: 0x20
+} SYSCFG_RegDef_t;
+
 
 
 
@@ -220,6 +263,18 @@ typedef struct {
  */
 
 #define RCC				((RCC_RegDef_t*) RCC_BASE_ADDR)
+
+/*
+ * EXTI peripheral
+ */
+
+#define EXTI			((EXTI_RegDef_t*) EXTI_BASE_ADDR)
+
+/*
+ * SYSCFG peripheral
+ */
+
+#define SYSCFG			((SYSCFG_RegDef_t*) SYSCFG_BASE_ADDR)
 
 
 
@@ -329,6 +384,65 @@ typedef struct {
  */
 
 #define SYSCFG_PCLK_DI()		(RCC->APB2ENR &= ~(1 << 14))
+
+/*
+ * GPIO port reset macros
+ */
+
+#define GPIOA_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 0); RCC->AHB1RSTR &= ~(1 << 0); } while(0)
+#define GPIOB_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 1); RCC->AHB1RSTR &= ~(1 << 1); } while(0)
+#define GPIOC_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 2); RCC->AHB1RSTR &= ~(1 << 2); } while(0)
+#define GPIOD_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 3); RCC->AHB1RSTR &= ~(1 << 3); } while(0)
+#define GPIOE_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 4); RCC->AHB1RSTR &= ~(1 << 4); } while(0)
+#define GPIOF_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 5); RCC->AHB1RSTR &= ~(1 << 5); } while(0)
+#define GPIOG_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 6); RCC->AHB1RSTR &= ~(1 << 6); } while(0)
+#define GPIOH_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 7); RCC->AHB1RSTR &= ~(1 << 7); } while(0)
+#define GPIOI_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 8); RCC->AHB1RSTR &= ~(1 << 8); } while(0)
+#define GPIOJ_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 9); RCC->AHB1RSTR &= ~(1 << 9); } while(0)
+#define GPIOK_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 10); RCC->AHB1RSTR &= ~(1 << 10); } while(0)
+
+/*
+ * GPIO port code macro
+ */
+
+#define GPIO_PORT_TO_CODE(x)	((x == GPIOA) ? 0x0 :\
+								 (x == GPIOB) ? 0x1 :\
+								 (x == GPIOC) ? 0x2 :\
+								 (x == GPIOD) ? 0x3 :\
+								 (x == GPIOE) ? 0x4 :\
+								 (x == GPIOF) ? 0x5 :\
+								 (x == GPIOG) ? 0x6 :\
+								 (x == GPIOH) ? 0x7 : 0x8)
+
+/*
+ * @IRQ_Numbers
+ */
+
+#define IRQ_EXTI0				6
+#define IRQ_EXTI1				7
+#define IRQ_EXTI2				8
+#define IRQ_EXTI3				9
+#define IRQ_EXTI4				10
+#define IRQ_EXTI9_5				23
+#define IRQ_EXTI15_10			40
+
+
+/*
+ * Generic macros
+ */
+
+#define ENABLE					1
+#define SET						1
+
+#define DISABLE					0
+#define RESET					0
+
+
+
+
+/**********************Driver Includes**********************/
+
+#include "stm32f407xx_gpio_driver.h"
 
 
 
