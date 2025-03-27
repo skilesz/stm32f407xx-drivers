@@ -175,6 +175,21 @@ typedef struct {
 } GPIO_RegDef_t;
 
 /*
+ * SPI registers
+ */
+
+typedef struct {
+	__vo uint32_t CR[2];			// SPI control registers 1 - 2										Offset: 0x00
+	__vo uint32_t SR;				// SPI status register												Offset: 0x08
+	__vo uint32_t DR;				// SPI data register												Offset: 0x0C
+	__vo uint32_t CRCPR;			// SPI CRC polynomial register										Offset: 0x10
+	__vo uint32_t RXCRCR;			// SPI RX CRC register												Offset: 0x14
+	__vo uint32_t TXCRCR;			// SPI TX CRC register												Offset: 0x18
+	__vo uint32_t I2SCFGR;			// SPI I2S configuration register									Offset: 0x1C
+	__vo uint32_t I2SPR;			// SPI I2S prescaler register										Offset: 0x20
+} SPI_RegDef_t;
+
+/*
  * RCC registers
  */
 typedef struct {
@@ -257,6 +272,18 @@ typedef struct {
 #define GPIOI			((GPIO_RegDef_t*) GPIOI_BASE_ADDR)
 #define GPIOJ			((GPIO_RegDef_t*) GPIOJ_BASE_ADDR)
 #define GPIOK			((GPIO_RegDef_t*) GPIOK_BASE_ADDR)
+
+/*
+ * SPI peripherals
+ */
+
+#define SPI1			((SPI_RegDef_t*) SPI1_BASE_ADDR)
+#define SPI2			((SPI_RegDef_t*) SPI2_BASE_ADDR)
+#define SPI3			((SPI_RegDef_t*) SPI3_BASE_ADDR)
+#define SPI4			((SPI_RegDef_t*) SPI4_BASE_ADDR)
+#define SPI5			((SPI_RegDef_t*) SPI5_BASE_ADDR)
+#define SPI6			((SPI_RegDef_t*) SPI6_BASE_ADDR)
+
 
 /*
  * RCC peripheral
@@ -443,6 +470,7 @@ typedef struct {
 /**********************Driver Includes**********************/
 
 #include "stm32f407xx_gpio_driver.h"
+#include "stm32f407xx_spi_driver.h"
 
 
 
