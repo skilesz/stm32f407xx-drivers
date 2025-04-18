@@ -280,9 +280,6 @@ typedef struct {
 #define SPI1			((SPI_RegDef_t*) SPI1_BASE_ADDR)
 #define SPI2			((SPI_RegDef_t*) SPI2_BASE_ADDR)
 #define SPI3			((SPI_RegDef_t*) SPI3_BASE_ADDR)
-#define SPI4			((SPI_RegDef_t*) SPI4_BASE_ADDR)
-#define SPI5			((SPI_RegDef_t*) SPI5_BASE_ADDR)
-#define SPI6			((SPI_RegDef_t*) SPI6_BASE_ADDR)
 
 
 /*
@@ -391,9 +388,6 @@ typedef struct {
 #define SPI1_PCLK_DI()			(RCC->APB2ENR &= ~(1 << 12))
 #define SPI2_PCLK_DI()			(RCC->APB1ENR &= ~(1 << 14))
 #define SPI3_PCLK_DI()			(RCC->APB1ENR &= ~(1 << 15))
-#define SPI4_PCLK_DI()			(RCC->APB2ENR &= ~(1 << 13))
-#define SPI5_PCLK_DI()			(RCC->APB2ENR &= ~(1 << 20))
-#define SPI6_PCLK_DI()			(RCC->APB2ENR &= ~(1 << 21))
 
 /*
  * USART peripheral clock disable macros
@@ -453,6 +447,9 @@ typedef struct {
 #define IRQ_EXTI9_5				23
 #define IRQ_EXTI15_10			40
 
+#define IRQ_SPI1				35
+#define IRQ_SPI2				36
+#define IRQ_SPI3				51
 
 /*
  * Generic macros
@@ -463,6 +460,43 @@ typedef struct {
 
 #define DISABLE					0
 #define RESET					0
+
+/*
+ * Bit position macros (SPI)
+ */
+
+#define SPI_CR1_CPHA			0x0
+#define SPI_CR1_CPOL			0x1
+#define SPI_CR1_MSTR			0x2
+#define SPI_CR1_BR				0x3
+#define SPI_CR1_SPE				0x6
+#define SPI_CR1_LSBFIRST		0x7
+#define SPI_CR1_SSI				0x8
+#define SPI_CR1_SSM				0x9
+#define SPI_CR1_RXONLY			0xA
+#define SPI_CR1_DFF				0xB
+#define SPI_CR1_CRCNEXT			0xC
+#define SPI_CR1_CRCEN			0xD
+#define SPI_CR1_BDIOE			0xE
+#define SPI_CR1_BIDIMODE		0xF
+
+#define SPI_CR2_RXDMAEN			0x0
+#define SPI_CR2_TXDMAEN			0x1
+#define SPI_CR2_SSOE			0x2
+#define SPI_CR2_FRF				0x4
+#define SPI_CR2_ERRIE			0x5
+#define SPI_CR2_RXNEIE			0x6
+#define SPI_CR2_TXEIE			0x7
+
+#define SPI_SR_RXNE				0x0
+#define SPI_SR_TXE				0x1
+#define SPI_SR_CHSIDE			0x2
+#define SPI_SR_UDR				0x3
+#define SPI_SR_CRCERR			0x4
+#define SPI_SR_MODF				0x5
+#define SPI_SR_OVR				0x6
+#define SPI_SR_BSY				0x7
+#define SPI_SR_FRE				0x8
 
 
 
