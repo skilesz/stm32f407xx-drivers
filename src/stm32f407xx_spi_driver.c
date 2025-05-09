@@ -28,6 +28,9 @@
  * -10	-> invalid software slave management configuration
  * -11	-> invalid enable value
  * -12	-> invalid IRQ number
+ * -13	-> null TX data pointer
+ * -14	-> invalid length
+ * -15	-> invalid length for 16-bit data frame (must be divisible by 2)
  */
 
 /*
@@ -122,6 +125,7 @@ int8_t SPI_Validate_IRQ_No(uint8_t IRQNumber) {
 
 int8_t SPI_Clock(SPI_RegDef_t* pSPIx, uint8_t enable) {
 	// Error checks
+	if (!pSPIx) return -1;
 	if (!(enable == ENABLE || enable == DISABLE)) return -11;
 
 	// Enable/disable peripheral clock
@@ -201,30 +205,79 @@ int8_t SPI_Init(SPI_Handle_t* pSPIHandle) {
 }
 
 /*
- * @fn
+ * @fn				SPI_Reset
  *
- * @desc
+ * @desc			Resets specified SPI peripheral
  *
- * @param
+ * @param			pSPIx: pointer to peripheral to be reset
  *
- * @return			0			-> valid handle
+ * @return			0			-> success
  * 					NEGATIVE	-> see @ERROR_CODES
  */
 
-int8_t SPI_Reset(SPI_RegDef_t* pSPIx);
+int8_t SPI_Reset(SPI_RegDef_t* pSPIx) {
+	// Error checks
+	if (!pSPIx) return -1;
+
+	switch ((uint32_t) pSPIx) {
+		case (uint32_t) SPI1:
+			SPI1_REG_RESET();
+			break;
+		case (uint32_t) SPI2:
+			SPI2_REG_RESET();
+			break;
+		case (uint32_t) SPI3:
+			SPI3_REG_RESET();
+			break;
+		default:
+			return -2;
+	}
+
+	return 0;
+}
 
 /*
- * @fn
+ * @fn				SPI_Send
  *
- * @desc
+ * @desc			Send specified length of data from TX buffer
  *
- * @param
+ * @param			pSPIHandle: handle of SPI peripheral
+ * 					pTxBuffer: pointer to data to be sent
+ * 					len: length of data to be sent in bytes
  *
  * @return			0			-> valid handle
  * 					NEGATIVE	-> see @ERROR_CODES
  */
 
-int8_t SPI_Send(SPI_RegDef_t* pSPIx, uint8_t* pTxBuffer, uint32_t len);
+int8_t SPI_Send(SPI_Handle_t* pSPIHandle, uint8_t* pTxBuffer, uint32_t len) {
+	// Error checks
+	int8_t handleValidate = SPI_Validate_Handle(pSPIHandle);
+	if (handleValidate) return handleValidate;
+	if (!pTxBuffer) return -13;
+	if (len <= 0) return -14;
+	if (len % 2 != 0) return -15;
+
+	// Send data from TX Buffer
+	while (len > 0) {
+		// Wait until TX buffer is empty (flag check)
+		while (!(pSPIHandle->pSPIx->SR & (0x1 << SPI_SR_TXE)));
+
+		// Write next data frame into TX buffer
+		if (pSPIHandle->config.DFF == SPI_DFF_8BIT) {
+			pSPIHandle->pSPIx->DR = *pTxBuffer;
+
+			len--;
+			pTxBuffer++;
+		} else {
+			pSPIHandle->pSPIx->DR = *((uint16_t*) pTxBuffer) ;
+
+			len -= 2;
+			pTxBuffer += 2;
+		}
+	}
+
+	return 0;
+}
 
 /*
  * @fn

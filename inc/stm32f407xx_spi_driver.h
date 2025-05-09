@@ -100,6 +100,43 @@ typedef struct {
 #define SPI_SSM_DI							0x0			// Software slave management disabled
 #define SPI_SSM_EN							0x1			// Software slave management enabled
 
+/*
+ * Bit position macros
+ */
+
+#define SPI_CR1_CPHA			0x0
+#define SPI_CR1_CPOL			0x1
+#define SPI_CR1_MSTR			0x2
+#define SPI_CR1_BR				0x3
+#define SPI_CR1_SPE				0x6
+#define SPI_CR1_LSBFIRST		0x7
+#define SPI_CR1_SSI				0x8
+#define SPI_CR1_SSM				0x9
+#define SPI_CR1_RXONLY			0xA
+#define SPI_CR1_DFF				0xB
+#define SPI_CR1_CRCNEXT			0xC
+#define SPI_CR1_CRCEN			0xD
+#define SPI_CR1_BDIOE			0xE
+#define SPI_CR1_BIDIMODE		0xF
+
+#define SPI_CR2_RXDMAEN			0x0
+#define SPI_CR2_TXDMAEN			0x1
+#define SPI_CR2_SSOE			0x2
+#define SPI_CR2_FRF				0x4
+#define SPI_CR2_ERRIE			0x5
+#define SPI_CR2_RXNEIE			0x6
+#define SPI_CR2_TXEIE			0x7
+
+#define SPI_SR_RXNE				0x0
+#define SPI_SR_TXE				0x1
+#define SPI_SR_CHSIDE			0x2
+#define SPI_SR_UDR				0x3
+#define SPI_SR_CRCERR			0x4
+#define SPI_SR_MODF				0x5
+#define SPI_SR_OVR				0x6
+#define SPI_SR_BSY				0x7
+#define SPI_SR_FRE				0x8
+
 
 
 
@@ -130,7 +167,7 @@ int8_t SPI_Reset(SPI_RegDef_t* pSPIx);
  * Data send/receive
  */
 
-int8_t SPI_Send(SPI_RegDef_t* pSPIx, uint8_t* pTxBuffer, uint32_t len);
+int8_t SPI_Send(SPI_RegDef_t* pSPIx, uint8_t* pData, uint32_t len);
 int8_t SPI_Receive(SPI_RegDef_t* pSPIx, uint8_t* pRxBuffer, uint32_t len);
 
 /*

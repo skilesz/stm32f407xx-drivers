@@ -303,10 +303,10 @@ typedef struct {
 
 
 
-/**********************Clock Macros**********************/
+/**********************Macros**********************/
 
 /*
- * GPIO peripheral clock enable macros
+ * Clock enable macros
  */
 
 #define GPIOA_PCLK_EN()			(RCC->AHB1ENR |= (1 << 0))
@@ -321,17 +321,9 @@ typedef struct {
 #define GPIOJ_PCLK_EN()			(RCC->AHB1ENR |= (1 << 9))
 #define GPIOK_PCLK_EN()			(RCC->AHB1ENR |= (1 << 10))
 
-/*
- * I2C peripheral clock enable macros
- */
-
 #define I2C1_PCLK_EN()			(RCC->APB1ENR |= (1 << 21))
 #define I2C2_PCLK_EN()			(RCC->APB1ENR |= (1 << 22))
 #define I2C3_PCLK_EN()			(RCC->APB1ENR |= (1 << 23))
-
-/*
- * SPI peripheral clock enable macros
- */
 
 #define SPI1_PCLK_EN()			(RCC->APB2ENR |= (1 << 12))
 #define SPI2_PCLK_EN()			(RCC->APB1ENR |= (1 << 14))
@@ -340,10 +332,6 @@ typedef struct {
 #define SPI5_PCLK_EN()			(RCC->APB2ENR |= (1 << 20))
 #define SPI6_PCLK_EN()			(RCC->APB2ENR |= (1 << 21))
 
-/*
- * USART peripheral clock enable macros
- */
-
 #define USART1_PCLK_EN()		(RCC->APB2ENR |= (1 << 4))
 #define USART2_PCLK_EN()		(RCC->APB1ENR |= (1 << 17))
 #define USART3_PCLK_EN()		(RCC->APB1ENR |= (1 << 18))
@@ -351,14 +339,10 @@ typedef struct {
 #define UART5_PCLK_EN()			(RCC->APB1ENR |= (1 << 20))
 #define USART6_PCLK_EN()		(RCC->APB2ENR |= (1 << 5))
 
-/*
- * SYSCFG peripheral clock enable macros
- */
-
 #define SYSCFG_PCLK_EN()		(RCC->APB2ENR |= (1 << 14))
 
 /*
- * GPIO peripheral clock disable macros
+ * Clock disable macros
  */
 
 #define GPIOA_PCLK_DI()			(RCC->AHB1ENR &= ~(1 << 0))
@@ -373,25 +357,13 @@ typedef struct {
 #define GPIOJ_PCLK_DI()			(RCC->AHB1ENR &= ~(1 << 9))
 #define GPIOK_PCLK_DI()			(RCC->AHB1ENR &= ~(1 << 10))
 
-/*
- * I2C peripheral clock disable macros
- */
-
 #define I2C1_PCLK_DI()			(RCC->APB1ENR &= ~(1 << 21))
 #define I2C2_PCLK_DI()			(RCC->APB1ENR &= ~(1 << 22))
 #define I2C3_PCLK_DI()			(RCC->APB1ENR &= ~(1 << 23))
 
-/*
- * SPI peripheral clock disable macros
- */
-
 #define SPI1_PCLK_DI()			(RCC->APB2ENR &= ~(1 << 12))
 #define SPI2_PCLK_DI()			(RCC->APB1ENR &= ~(1 << 14))
 #define SPI3_PCLK_DI()			(RCC->APB1ENR &= ~(1 << 15))
-
-/*
- * USART peripheral clock disable macros
- */
 
 #define USART1_PCLK_DI()		(RCC->APB2ENR &= ~(1 << 4))
 #define USART2_PCLK_DI()		(RCC->APB1ENR &= ~(1 << 17))
@@ -400,14 +372,10 @@ typedef struct {
 #define UART5_PCLK_DI()			(RCC->APB1ENR &= ~(1 << 20))
 #define USART6_PCLK_DI()		(RCC->APB2ENR &= ~(1 << 5))
 
-/*
- * SYSCFG peripheral clock disable macros
- */
-
 #define SYSCFG_PCLK_DI()		(RCC->APB2ENR &= ~(1 << 14))
 
 /*
- * GPIO port reset macros
+ * Port reset macros
  */
 
 #define GPIOA_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 0); RCC->AHB1RSTR &= ~(1 << 0); } while(0)
@@ -422,8 +390,13 @@ typedef struct {
 #define GPIOJ_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 9); RCC->AHB1RSTR &= ~(1 << 9); } while(0)
 #define GPIOK_REG_RESET()		do { RCC->AHB1RSTR |= (1 << 10); RCC->AHB1RSTR &= ~(1 << 10); } while(0)
 
+#define SPI1_REG_RESET()		do { RCC->APB2RSTR |= (1 << 12); RCC->APB2RSTR &= ~(1 << 12); } while(0)
+#define SPI2_REG_RESET()		do { RCC->APB1RSTR |= (1 << 14); RCC->APB1RSTR &= ~(1 << 14); } while(0)
+#define SPI3_REG_RESET()		do { RCC->APB1RSTR |= (1 << 15); RCC->APB1RSTR &= ~(1 << 15); } while(0)
+
+
 /*
- * GPIO port code macro
+ * Port code macros
  */
 
 #define GPIO_PORT_TO_CODE(x)	((x == GPIOA) ? 0x0 :\
@@ -460,43 +433,6 @@ typedef struct {
 
 #define DISABLE					0
 #define RESET					0
-
-/*
- * Bit position macros (SPI)
- */
-
-#define SPI_CR1_CPHA			0x0
-#define SPI_CR1_CPOL			0x1
-#define SPI_CR1_MSTR			0x2
-#define SPI_CR1_BR				0x3
-#define SPI_CR1_SPE				0x6
-#define SPI_CR1_LSBFIRST		0x7
-#define SPI_CR1_SSI				0x8
-#define SPI_CR1_SSM				0x9
-#define SPI_CR1_RXONLY			0xA
-#define SPI_CR1_DFF				0xB
-#define SPI_CR1_CRCNEXT			0xC
-#define SPI_CR1_CRCEN			0xD
-#define SPI_CR1_BDIOE			0xE
-#define SPI_CR1_BIDIMODE		0xF
-
-#define SPI_CR2_RXDMAEN			0x0
-#define SPI_CR2_TXDMAEN			0x1
-#define SPI_CR2_SSOE			0x2
-#define SPI_CR2_FRF				0x4
-#define SPI_CR2_ERRIE			0x5
-#define SPI_CR2_RXNEIE			0x6
-#define SPI_CR2_TXEIE			0x7
-
-#define SPI_SR_RXNE				0x0
-#define SPI_SR_TXE				0x1
-#define SPI_SR_CHSIDE			0x2
-#define SPI_SR_UDR				0x3
-#define SPI_SR_CRCERR			0x4
-#define SPI_SR_MODF				0x5
-#define SPI_SR_OVR				0x6
-#define SPI_SR_BSY				0x7
-#define SPI_SR_FRE				0x8
 
 
 

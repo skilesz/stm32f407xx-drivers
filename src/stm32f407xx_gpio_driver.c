@@ -133,6 +133,7 @@ int8_t GPIO_Validate_IRQ_No(uint8_t IRQNumber) {
  */
 int8_t GPIO_Clock(GPIO_RegDef_t* pGPIOx, uint8_t enable) {
 	// Error checks
+	if (!pGPIOx) return -1;
 	if (!(enable == ENABLE || enable == DISABLE)) return -10;
 
 	// Enable/disable port
