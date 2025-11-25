@@ -239,13 +239,13 @@ int8_t SPI_Reset(SPI_RegDef_t* pSPIx) {
 /*
  * @fn				SPI_Send
  *
- * @desc			Send specified length of data from TX buffer
+ * @desc			Send specified length of data from TX buffer (blocking call)
  *
  * @param			pSPIHandle: handle of SPI peripheral
  * 					pTxBuffer: pointer to data to be sent
  * 					len: length of data to be sent in bytes
  *
- * @return			0			-> valid handle
+ * @return			0			-> success
  * 					NEGATIVE	-> see @ERROR_CODES
  */
 
@@ -255,7 +255,7 @@ int8_t SPI_Send(SPI_Handle_t* pSPIHandle, uint8_t* pTxBuffer, uint32_t len) {
 	if (handleValidate) return handleValidate;
 	if (!pTxBuffer) return -13;
 	if (len <= 0) return -14;
-	if (len % 2 != 0) return -15;
+	if (pSPIHandle->config.DFF == SPI_DFF_16BIT && len % 2 != 0) return -15;
 
 	// Send data from TX Buffer
 	while (len > 0) {

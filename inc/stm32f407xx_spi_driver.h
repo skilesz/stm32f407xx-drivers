@@ -167,7 +167,7 @@ int8_t SPI_Reset(SPI_RegDef_t* pSPIx);
  * Data send/receive
  */
 
-int8_t SPI_Send(SPI_RegDef_t* pSPIx, uint8_t* pData, uint32_t len);
+int8_t SPI_Send(SPI_Handle_t* pSPIHandle, uint8_t* pTxBuffer, uint32_t len);
 int8_t SPI_Receive(SPI_RegDef_t* pSPIx, uint8_t* pRxBuffer, uint32_t len);
 
 /*

@@ -1,7 +1,7 @@
 /*
  * stm32f407xx.h
  *
- *  Created on: Feb 26, 2025
+ *  Updated on: Feb 26, 2025
  *      Author: Zach Skiles (skilesz)
  */
 
@@ -12,23 +12,6 @@
 #include <stdbool.h>
 
 #define __vo volatile
-
-
-
-
-/**********************Processor Specific Addresses**********************/
-
-/*
- * NVIC registers
- */
-
-#define NVIC_ISER					((uint32_t*) 0xE000E100U)		// Base address of NVIC_ISER registers
-#define NVIC_ICER					((uint32_t*) 0xE000E180U)		// Base address of NVIC_ICER registers
-#define NVIC_ISPR					((uint32_t*) 0xE000E200U)		// Base address of NVIC_ISPR registers
-#define NVIC_ICPR					((uint32_t*) 0xE000E280U)		// Base address of NVIC_ICPR registers
-#define NVIC_IABR					((uint32_t*) 0xE000E300U)		// Base address of NVIC_IABR registers
-#define NVIC_IPR					((uint32_t*) 0xE000E400U)		// Base address of NVIC_IPR registers
-#define NVIC_STIR					((uint32_t*) 0xE000EF00U)		// Base address of NVIC_STIR register
 
 
 
@@ -50,7 +33,7 @@
  */
 
 #define PERIPH_BASE_ADDR				0x40000000U			// Base address of peripheral registers
-#define APB1_BASE_ADDR					PERIPH_BASE			// Base address of APB1 peripherals
+#define APB1_BASE_ADDR					PERIPH_BASE_ADDR	// Base address of APB1 peripherals
 #define APB2_BASE_ADDR					0x40010000U			// Base address of APB2 peripherals
 #define AHB1_BASE_ADDR					0x40020000U			// Base address of AHB1 peripherals
 #define AHB2_BASE_ADDR					0x50000000U			// Base address of AHB2 peripherals
@@ -441,6 +424,7 @@ typedef struct {
 
 #include "stm32f407xx_gpio_driver.h"
 #include "stm32f407xx_spi_driver.h"
+#include "stm32f407xx_nvic_driver.h"
 
 
 
